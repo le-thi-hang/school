@@ -1,0 +1,141 @@
+@charset "UTF-8";
+
+/*==================================================
+スライダーのためのcss
+===================================*/
+.slider {/*横幅94%で左右に余白を持たせて中央寄せ*/
+   width:94%;
+    margin:0 auto;
+}
+
+.slider img {
+    width:100%;/*スライダー内の画像を横幅100%に*/
+    height:auto;
+}
+
+/*slickのJSで書かれるタグ内、スライド左右の余白調整*/
+
+.slider .slick-slide {
+    margin:0 10px;
+}
+
+/*矢印の設定*/
+
+/*戻る、次へ矢印の位置*/
+.slick-prev, 
+.slick-next {
+    position: absolute;/*絶対配置にする*/
+    top: 42%;
+    cursor: pointer;/*マウスカーソルを指マークに*/
+    outline: none;/*クリックをしたら出てくる枠線を消す*/
+    border-top: 2px solid #666;/*矢印の色*/
+    border-right: 2px solid #666;/*矢印の色*/
+    height: 15px;
+    width: 15px;
+}
+
+.slick-prev {/*戻る矢印の位置と形状*/
+    left: -1.5%;
+    transform: rotate(-135deg);
+}
+
+.slick-next {/*次へ矢印の位置と形状*/
+    right: -1.5%;
+    transform: rotate(45deg);
+}
+
+/*ドットナビゲーションの設定*/
+
+.slick-dots {
+    text-align:center;
+	margin:20px 0 0 0;
+}
+
+.slick-dots li {
+    display:inline-block;
+	margin:0 5px;
+}
+
+.slick-dots button {
+    color: transparent;
+    outline: none;
+    width:8px;/*ドットボタンのサイズ*/
+    height:8px;/*ドットボタンのサイズ*/
+    display:block;
+    border-radius:50%;
+    background:#ccc;/*ドットボタンの色*/
+}
+
+.slick-dots .slick-active button{
+    background:#333;/*ドットボタンの現在地表示の色*/
+}
+
+
+
+
+/*==================================================
+スライダーのためのcss
+===================================*/
+/*画像の横幅を100%にしてレスポンシブ化*/
+img{
+	width: 100%;
+	height: auto;
+	vertical-align: bottom;/*画像の下にできる余白を削除*/
+}
+
+/*メイン画像下に余白をつける*/
+
+.gallery{
+	margin:0 0 5px 0;
+}
+
+.gallery li{
+	list-style:none;
+}
+
+/*矢印の設定*/
+
+/*戻る、次へ矢印の位置*/
+.slick-prev, 
+.slick-next {
+    position: absolute;/*絶対配置にする*/
+	z-index: 3;
+    top: 42%;
+    cursor: pointer;/*マウスカーソルを指マークに*/
+    outline: none;/*クリックをしたら出てくる枠線を消す*/
+    border-top: 2px solid #ccc;/*矢印の色*/
+    border-right: 2px solid #ccc;/*矢印の色*/
+    height: 10px;
+    width: 10px;
+}
+
+.slick-prev {/*戻る矢印の位置と形状*/
+    left:2.5%;
+    transform: rotate(-135deg);
+}
+
+.slick-next {/*次へ矢印の位置と形状*/
+    right:2.5%;
+    transform: rotate(45deg);
+}
+
+/*選択するサムネイル画像の設定*/
+
+.choice-btn li{
+	cursor: pointer;
+	outline: none;
+	background:#333;
+	list-style:none;
+}
+
+.choice-btn li img{
+	opacity: 0.4;/*選択されていないものは透過40%*/
+}
+
+.choice-btn li.slick-current img{
+	opacity: 1;/*選択されているものは透過しない*/
+}
+
+.choice-btn .slick-track {
+	transform: unset !important;/*画面幅サイズ変更に伴うサムネイル固定*/
+}
