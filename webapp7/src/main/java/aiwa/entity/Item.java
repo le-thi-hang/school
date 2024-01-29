@@ -14,6 +14,20 @@ public class Item {
 	private String image5;
 	private Category category;
 
+	private int cartNum = 1;
+
+	public int getSubTotal() {
+		return price * cartNum;
+	}
+
+	public int getCartNum() {
+		return cartNum;
+	}
+
+	public void setCartNum(int cartNum) {
+		this.cartNum = cartNum;
+	}
+
 	public int getItemId() {
 		return itemId;
 	}
@@ -100,6 +114,11 @@ public class Item {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public void add(Item item1) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 }

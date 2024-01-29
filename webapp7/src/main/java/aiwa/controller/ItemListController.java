@@ -28,6 +28,11 @@ public class ItemListController extends HttpServlet {
 		//			return;
 		//		}
 
+		String page = request.getParameter("page");
+		if (page == null) {
+			page = "1";
+		}
+
 		//parameter
 		String word = request.getParameter("keyword");
 		if (word == null) {
@@ -40,10 +45,12 @@ public class ItemListController extends HttpServlet {
 		//model
 
 		ItemModel im = new ItemModel(getServletContext());
-		List<Item> items = im.findByCondition(word, Integer.parseInt(categoryId));
+		List<Item> items = im.findByCondition(word, Integer.parseInt(categoryId), Integer.parseInt(page));
+		int count = im.countByCondition(word, Integer.parseInt(categoryId));
+
 		CategoryModel cm = new CategoryModel(getServletContext());
 		List<Category> categories = cm.findAll();
-		Category category = cm.findByIdl(Integer.parseInt(categoryId));
+		Category category = cm.findById(Integer.parseInt(categoryId));
 
 		//view
 		request.setAttribute("items", items);
@@ -51,6 +58,8 @@ public class ItemListController extends HttpServlet {
 		request.setAttribute("categoryid", Integer.parseInt(categoryId));
 		request.setAttribute("categories", categories);
 		request.setAttribute("category", category);
+		request.setAttribute("count", count);
+		request.setAttribute("page", Integer.parseInt(page));
 		request.getRequestDispatcher("/itemListView.jsp").forward(request, response);
 	}
 

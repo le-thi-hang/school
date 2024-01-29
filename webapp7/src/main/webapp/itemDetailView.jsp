@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>家具</title>
+<title>商品情報</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="ここにサイト説明を入れます">
 <meta name="keywords" content="キーワード１,キーワード２,キーワード３,キーワード４,キーワード５">
@@ -27,6 +27,7 @@ List<Category> categories = (List<Category>) request.getAttribute("categories");
 Item item = (Item) request.getAttribute("item");
 
 User user = (User) session.getAttribute("loginuser");
+
 %>
 <style>
 th {
@@ -75,44 +76,30 @@ input[type="number"] {
 <script src="js/fixmenu.js"></script>
 <script src="js/fixmenu_pagetop.js"></script>
 <script src="js/ddmenu_min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+	function changeAmount(){
+
+	}
+	
+</script>
 </head>
 <body class="c2">
-	<header>
-		<nav id="menubar" class="nav-fix-pos">
-			<ul class="inner">
-				<li><a href="ItemListController">ホーム<span>Home</span></a>
-					<ul class="ddmenu">
-						<li><a href="">ユーザー情報<span><%=user == null ? "ゲスト" : user.getUserName()%>さん</span></a></li>
-						<%if (user == null) {%>
-						<li><a class="login" href="LoginController">ログイン<span>Login</span></a></li>
-						<%} else {%>
-						<li><a class="login" href="LogoutController">ログアウト<span>Logout</span></a></li>
-						<%}%>
-						<li><a href="">お問い合わせ<span>Contact</span></a></li>
-					</ul></li>
-				<li><a href="ItemListController">情報一覧<span>Category</span></a>
-					<ul class="ddmenu">
-						<%for (Category c : categories) {%>
-						<li><a href="ItemListController?categoryid=<%=c.getCategoryId()%>"><span><%=c.getCategoryName()%></span></a></li>
-						<%}%>
-					</ul>
-				</li>
-			</ul>
-		</nav>
-		<nav id="menubar-s">
-			<ul>
-				<li><a href="">ホーム<span>Home</span></a></li>
-				<li><a href="">情報一覧<span>Category</span></a></li>
-			</ul>
-		</nav>
-	</header>
+	<jsp:include page="header.jsp"></jsp:include>
 	<div id="contents" class="inner">
 		<div id="contents-in">
 			<aside id="mainimg">
-				<a href="#"><img src="images/1.jpg" alt="飲食店を探す" id="img1"></a> <a href="#"><img src="images/2.jpg" alt="病院を探す" id="img2"></a> <a href="#"><img src="images/3.jpg" alt="美容院を探す" id="img3"></a> <a href="#"><img src="images/4.jpg" alt="習い事を探す" id="img4"></a> <a href="#"><img src="images/5.jpg" alt="介護施設を探す" id="img5"></a>
+				<a href="#"><img src="images/1.jpg" alt="" id="img1"></a> 
+				<a href="#"><img src="images/2.jpg" alt="" id="img2"></a> 
+				<a href="#"><img src="images/3.jpg" alt="" id="img3"></a>
+				<a href="#"><img src="images/4.jpg" alt="" id="img4"></a> 
+				<a href="#"><img src="images/5.jpg" alt="" id="img5"></a>
 			</aside>
 			<div id="main">
 				<section>
+					<h2>
+						<span><%=item.getCategory().getCategoryName()%></span>
+					</h2>
 					<h3>
 						<span><%=item.getItemName()%></span>
 					</h3>				
@@ -154,12 +141,13 @@ input[type="number"] {
 									</tr>
 									<tr>
 										<td colspan="2">
-											<input type="number" min="1" class="text-center col-md-4" value="1" name="quantity"></td>
+											<input type="number" min="1" class="text-center col-md-4" value="1" name="quantity">
+										</td>
 									</tr>
 									<tr>
 										<td colspan="2" style="text-align: center;color:#fff;">		
 											<div class="button001">		
-												<a class="search_container" style="display:block;background: #6fbfd1;text-decoration: none;color:#fff;" href="#">カートに追加する</a>
+												<a class="search_container" style="display:block;background: #6fbfd1;text-decoration: none;color:#fff;" href="CartAddController?itemid=<%= item.getItemId()%>">カートに追加する</a>
 											</div>							
 										</td>
 									</tr>
@@ -169,43 +157,36 @@ input[type="number"] {
 												<a class="search_container" style="display:block; background: #6fbfd1;text-decoration: none;color:#fff;" href="#">お気に入りに追加</a>	
 											</div>									
 										</td>
-									</tr>						
+									</tr>	
+									<tr>
+										<td colspan="2" style="text-align: center;color:#fff;">
+											<div class="button001">					
+												<a class="search_container" style="display:block; background: #6fbfd1;text-decoration: none;color:#fff;" href="#">すぐ買う</a>	
+											</div>									
+										</td>
+									</tr>					
 								</table>
 							</div>
 						</div>
 					</div>
 				</section>
-			</div>
-			<div id="sub">
+			</div>		
+			<jsp:include page="side.jsp"></jsp:include>
+			<%if(user != null && user.getManager() == 1) {%>
+			<div style="text-align:right;"id="sub">
 				<nav>
-					<h2>情報一覧</h2>
-					<ul class="submenu" style="padding-left:0">
-						<%for (Category c : categories) {%>
-						<li><a href="ItemListController?categoryid=<%=c.getCategoryId()%>"><%=c.getCategoryName()%></a></li>
-						<%}%>
-					</ul>
+					<h2><a href="ItemDeleteController?itemid=<%=item.getItemId()%>" style="text-decoration: none;"onclick="return confirm('削除しますか')">削除</a></h2>
 				</nav>
 			</div>
+			<div style="text-align:right;"id="sub">
+				<nav>
+					<h2><a href="ItemUpdateController?itemid=<%=item.getItemId()%>" style="text-decoration: none;">修正</a></h2>
+				</nav>
+			</div>
+			<% } %>
 		</div>
 	</div>
-	<footer>
-		<div id="footermenu" class="inner">
-			<ul>
-				<li class="title">メニュータイトル</li>
-				<li><a href="index.html">ホーム</a></li>
-				<li><a href="contact.html">お問い合わせ</a></li>
-			</ul>		
-		</div>
-	</footer>
-
-	<!--ページの上部に戻る「↑」ボタン-->
-	<p class="nav-fix-pos-pagetop">
-		<a href="#">↑</a>
-	</p>
-
-	<!--メニュー開閉ボタン-->
-	<div id="menubar_hdr" class="close"></div>
-	<!--メニューの開閉処理条件設定　900px以下-->
+	<jsp:include page="footer.jsp"></jsp:include>
 	<script>
 		if (OCwindowWidth() <= 900) {
 			open_close("menubar_hdr", "menubar-s");

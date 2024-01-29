@@ -16,7 +16,7 @@ public class CategoryModel extends BaseModel {
 		super(context);
 	}
 
-	public Category findByIdl(int categoryId) {
+	public Category findById(int categoryId) {
 
 		try {
 			Connection conn = super.connect();
@@ -28,6 +28,7 @@ public class CategoryModel extends BaseModel {
 				Category c = new Category();
 				c.setCategoryId(rs.getInt("categoryid"));
 				c.setCategoryName(rs.getString("categoryname"));
+				conn.close();
 				return c;
 			}
 			conn.close();
